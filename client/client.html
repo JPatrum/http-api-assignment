@@ -12,8 +12,10 @@
       contentSect.innerHTML = "";
 
       if (type === "text/xml") {
-        const parsedResponse = new window.DOMParser().parseFromString(response, 'text/xml');
-        contentSect += `Message: ${parsedResponse.querySelector('message').textContent}`
+        response.text().then((resText) => {
+          const parsedResponse = new window.DOMParser().parseFromString(resText, 'text/xml');
+          contentSect.innerHTML = `Message: ${parsedResponse.querySelector('message').textContent}`
+        });
       } else {
         let obj = await response.json();
         let jsonString = JSON.stringify(obj);
@@ -24,11 +26,10 @@
     const sendFetch = async (url, type) => {
       const options = {
         method: 'GET',
-        headers: {'Accept':type}
+        headers: { 'Accept': type }
       }
-      console.log(url); console.log(type);
       let fetchPromise = fetch(url, options);
-      fetchPromise.then((response) => {handleResponse(response)});
+      fetchPromise.then((response) => { handleResponse(response) });
     };
 
     const init = () => {

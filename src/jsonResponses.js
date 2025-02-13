@@ -27,7 +27,7 @@ const respondJSON = (req, res, status, msg, resID = '') => {
 
 const getSuccess = (req, res) => {
   const msg = 'This is a successful response';
-  respondJSON(req, res, 200, msg);
+  respondJSON(req, res, 200, msg, '');
 };
 
 const getBadReq = (req, res) => {

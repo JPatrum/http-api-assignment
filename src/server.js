@@ -21,9 +21,10 @@ const onRequest = (req, res) => {
   const parsedUrl = new URL(req.url, `${protocol}://${req.headers.host}`);
 
   req.query = Object.fromEntries(parsedUrl.searchParams);
+  req.acceptedTypes = req.headers.accept.split(',');
 
-  if (urlStruct[parsedUrl.pathname]) {
-    urlStruct[parsedUrl.pathname](req, res);
+  if (urlStruct[req.url]) {
+    urlStruct[req.url](req, res);
   } else {
     urlStruct.notFound(req, res);
   }
